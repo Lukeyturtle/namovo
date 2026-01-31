@@ -24,17 +24,10 @@
             border-bottom: 3px solid #8b2222;
         }
 
-        /* Logo Placeholder */
-        .logo-placeholder {
-            width: 120px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 1px dashed white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 12px;
+        /* Logo Placeholder becomes Image style */
+        .logo-img {
+            height: 70px; /* Adjust height as needed */
+            width: auto;
         }
 
         /* Navigation Links */
@@ -52,14 +45,10 @@
             font-size: 18px;
         }
 
-        .nav-links a:hover {
-            color: #ffffff;
-        }
+        .nav-links a:hover { color: #ffffff; }
 
         /* Home Title Section */
-        .page-header {
-            margin-top: 20px;
-        }
+        .page-header { margin-top: 20px; }
 
         .title-box {
             background-color: #b32d2d; /* Red Background */
@@ -69,12 +58,7 @@
             margin-bottom: 5px;
         }
 
-        .title-box h1 {
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .title-box h1 { margin: 0; font-size: 32px; text-transform: uppercase; }
 
         .subtitle {
             padding-left: 40px;
@@ -91,15 +75,18 @@
             border: 1px solid #ccc;
             min-height: 400px;
         }
+        
+        /* Contact Form Styles */
+        .contact-form label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; }
+        .contact-form button { background-color: #003366; color: white; padding: 10px 15px; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <!-- Header Banner visible on all pages -->
     <header class="top-banner">
-        <div class="logo-placeholder">
-            [LOGO SPACE]
-        </div>
+        <img src="namovo-seal.png" alt="Municipality of Namovo Seal" class="logo-img">
         <nav>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
@@ -122,11 +109,30 @@
 
     <!-- Main Content Area -->
     <main class="main-content">
-        <p>This is the central information hub for the Namovo municipality.</p>
+        <h2>Official Information Hub</h2>
+        <p>This is the central information hub for the Namovo municipality. Use the navigation above to find official records.</p>
+        
         <hr>
-        <p>Use the links in the top-right to navigate through the official records, 
-           available perks for citizens, and the secure staff gateway.</p>
+
+        <h3>Contact the Governor</h3>
+        <p>Use the secure form below to send a message directly to the Municipal Governor's office.</p>
+
+        <!-- NOTE: A static GitHub page cannot actually send emails. This is a placeholder form. -->
+        <form class="contact-form" action="#" method="POST">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Your Citizen ID / Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message to the Governor:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+
+            <button type="submit">SEND SECURE MESSAGE</button>
+        </form>
+
     </main>
 
 </body>
 </html>
+
