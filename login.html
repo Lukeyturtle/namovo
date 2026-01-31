@@ -4,31 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Login - Namovo Official</title>
+    <!-- Favicon link added here -->
+    <link rel="icon" href="namovo-seal.png" type="image/png">
     <style>
-        /* Shared Global Styles */
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0f0f0; }
         .top-banner { background-color: #b32d2d; height: 80px; display: flex; justify-content: space-between; align-items: center; padding: 0 40px; border-bottom: 3px solid #8b2222; }
+        .logo-img { height: 70px; width: auto; }
+        .logo-link { display: flex; align-items: center; } 
         .nav-links { list-style: none; display: flex; gap: 25px; }
         .nav-links a { color: #ffff00; text-decoration: underline; font-weight: bold; }
         .title-box { background-color: #b32d2d; color: white; padding: 10px 40px; display: inline-block; margin-top: 20px; }
-        
-        /* Login Specific Styles */
         #login-container { width: 400px; margin: 50px auto; background: white; border: 2px solid #b32d2d; padding: 20px; box-shadow: 5px 5px 0px #ccc; }
         .form-group { margin-bottom: 15px; }
         label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; }
         input, select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; font-family: "Courier New", Courier, monospace; }
         .login-btn { background-color: #b32d2d; color: white; border: none; padding: 10px; width: 100%; cursor: pointer; font-weight: bold; border-bottom: 3px solid #8b2222; }
         .login-btn:hover { background-color: #8b2222; }
-
-        /* Secret Portal Display (Hidden by default) */
         #portal-display { display: none; margin: 20px 40px; padding: 30px; background: #000; color: #00ff00; font-family: "Courier New", Courier, monospace; border: 5px solid #333; }
         .error { color: red; font-size: 12px; display: none; margin-bottom: 10px; }
     </style>
 </head>
 <body>
-
     <header class="top-banner">
-        <div style="color:white; border:1px dashed white; padding:10px;">[LOGO SPACE]</div>
+        <!-- Image is now a link to index.html -->
+        <a href="index.html" class="logo-link">
+            <img src="namovo-seal.png" alt="Municipality of Namovo Seal" class="logo-img">
+        </a>
         <nav><ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
@@ -36,10 +37,8 @@
             <li><a href="login.html">Login</a></li>
         </ul></nav>
     </header>
-
     <div id="login-interface">
         <div class="title-box"><h1>Staff Login</h1></div>
-        
         <div id="login-container">
             <div id="error-msg" class="error">INVALID CREDENTIALS. ACCESS DENIED.</div>
             <div class="form-group">
@@ -62,8 +61,6 @@
             <button class="login-btn" onclick="checkLogin()">AUTHORISE ACCESS</button>
         </div>
     </div>
-
-    <!-- Hidden Results Section -->
     <div id="portal-display">
         <h2 id="portal-title">ACCESSING SECURE DATA...</h2>
         <hr style="border-color:#00ff00">
@@ -71,27 +68,21 @@
         <br>
         <button onclick="location.reload()" style="background:#222; color:#00ff00; border:1px solid #00ff00; cursor:pointer;">LOGOUT</button>
     </div>
-
     <script>
         function checkLogin() {
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
             const dept = document.getElementById('dept').value;
             const error = document.getElementById('error-msg');
-
             if(user === "Namovo" && pass === "123456") {
                 document.getElementById('login-interface').style.display = 'none';
                 document.getElementById('portal-display').style.display = 'block';
                 showData(dept);
-            } else {
-                error.style.display = 'block';
-            }
+            } else { error.style.display = 'block'; }
         }
-
         function showData(dept) {
             const title = document.getElementById('portal-title');
             const content = document.getElementById('portal-content');
-            
             if(dept === "NNEPP") {
                 title.innerText = "NNEPP REACTOR STATUS";
                 content.innerHTML = "REACTOR TEMP: 952 Kelvin<br>COOLANT PUMPS: OPEN<br>CONTROL RODS: INSERTED 58%<br>STATUS: STABLE";
