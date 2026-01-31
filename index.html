@@ -5,134 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Namovo Official Page</title>
     <style>
-        /* 2010s Professional Aesthetic */
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-
-        /* Top Red Banner */
-        .top-banner {
-            background-color: #b32d2d; /* Not too dark, not too bright red */
-            height: 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 40px;
-            border-bottom: 3px solid #8b2222;
-        }
-
-        /* Logo Placeholder becomes Image style */
-        .logo-img {
-            height: 70px; /* Adjust height as needed */
-            width: auto;
-        }
-
-        /* Navigation Links */
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 25px;
-            margin: 0;
-        }
-
-        .nav-links a {
-            color: #ffff00; /* Yellow */
-            text-decoration: underline;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
+        body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; background-color: #f0f0f0; }
+        .top-banner { background-color: #b32d2d; height: 80px; display: flex; justify-content: space-between; align-items: center; padding: 0 40px; border-bottom: 3px solid #8b2222; }
+        .logo-img { height: 70px; width: auto; }
+        .nav-links { list-style: none; display: flex; gap: 25px; margin: 0; }
+        .nav-links a { color: #ffff00; text-decoration: underline; font-weight: bold; font-size: 18px; }
         .nav-links a:hover { color: #ffffff; }
-
-        /* Home Title Section */
         .page-header { margin-top: 20px; }
-
-        .title-box {
-            background-color: #b32d2d; /* Red Background */
-            color: white;
-            padding: 10px 40px;
-            display: inline-block;
-            margin-bottom: 5px;
-        }
-
+        .title-box { background-color: #b32d2d; color: white; padding: 10px 40px; display: inline-block; margin-bottom: 5px; }
         .title-box h1 { margin: 0; font-size: 32px; text-transform: uppercase; }
-
-        .subtitle {
-            padding-left: 40px;
-            font-size: 20px;
-            color: #333;
-            font-style: italic;
-        }
-
-        /* Content Area */
-        .main-content {
-            padding: 40px;
-            background-color: white;
-            margin: 20px 40px;
-            border: 1px solid #ccc;
-            min-height: 400px;
-        }
-        
-        /* Contact Form Styles */
+        .subtitle { padding-left: 40px; font-size: 20px; color: #333; font-style: italic; }
+        .main-content { padding: 40px; background-color: white; margin: 20px 40px; border: 1px solid #ccc; min-height: 400px; }
         .contact-form label { display: block; margin-bottom: 5px; font-weight: bold; }
         .contact-form input, .contact-form textarea { width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box; }
         .contact-form button { background-color: #003366; color: white; padding: 10px 15px; border: none; cursor: pointer; }
+        
+        /* New Link Style */
+        .apply-link { color: #b32d2d; font-weight: bold; text-decoration: underline; font-size: 1.2em; margin-bottom: 20px; display: inline-block; }
     </style>
 </head>
 <body>
-
-    <!-- Header Banner visible on all pages -->
     <header class="top-banner">
         <img src="namovo-seal.png" alt="Municipality of Namovo Seal" class="logo-img">
-        <nav>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="perks.html">Perks</a></li>
-                <li><a href="login.html">Login</a></li>
-            </ul>
-        </nav>
+        <nav><ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="perks.html">Perks</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul></nav>
     </header>
-
-    <!-- Main Title Section -->
     <div class="page-header">
-        <div class="title-box">
-            <h1>Home</h1>
-        </div>
-        <div class="subtitle">
-            Welcome to the official Namovo page.
-        </div>
+        <div class="title-box"><h1>Home</h1></div>
+        <div class="subtitle">Welcome to the official Namovo page.</div>
     </div>
-
-    <!-- Main Content Area -->
     <main class="main-content">
         <h2>Official Information Hub</h2>
         <p>This is the central information hub for the Namovo municipality. Use the navigation above to find official records.</p>
         
         <hr>
 
+        <a href="apply.html" class="apply-link">Apply for Citizenship Here</a>
+
         <h3>Contact the Governor</h3>
         <p>Use the secure form below to send a message directly to the Municipal Governor's office.</p>
-
-        <!-- NOTE: A static GitHub page cannot actually send emails. This is a placeholder form. -->
         <form class="contact-form" action="#" method="POST">
             <label for="name">Your Name:</label>
             <input type="text" id="name" name="name" required>
-
             <label for="email">Your Citizen ID / Email:</label>
             <input type="email" id="email" name="email" required>
-
             <label for="message">Message to the Governor:</label>
             <textarea id="message" name="message" rows="5" required></textarea>
-
             <button type="submit">SEND SECURE MESSAGE</button>
         </form>
-
     </main>
-
 </body>
 </html>
-
