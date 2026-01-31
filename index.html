@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Namovo Official Page</title>
+    <style>
+        /* 2010s Professional Aesthetic */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        /* Top Red Banner */
+        .top-banner {
+            background-color: #b32d2d; /* Not too dark, not too bright red */
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            border-bottom: 3px solid #8b2222;
+        }
+
+        /* Logo Placeholder */
+        .logo-placeholder {
+            width: 120px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px dashed white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+        }
+
+        .nav-links a {
+            color: #ffff00; /* Yellow */
+            text-decoration: underline;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        /* Home Title Section */
+        .page-header {
+            margin-top: 20px;
+        }
+
+        .title-box {
+            background-color: #b32d2d; /* Red Background */
+            color: white;
+            padding: 10px 40px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .title-box h1 {
+            margin: 0;
+            font-size: 32px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            padding-left: 40px;
+            font-size: 20px;
+            color: #333;
+            font-style: italic;
+        }
+
+        /* Content Area */
+        .main-content {
+            padding: 40px;
+            background-color: white;
+            margin: 20px 40px;
+            border: 1px solid #ccc;
+            min-height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Banner visible on all pages -->
+    <header class="top-banner">
+        <div class="logo-placeholder">
+            [LOGO SPACE]
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="perks.html">Perks</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Title Section -->
+    <div class="page-header">
+        <div class="title-box">
+            <h1>Home</h1>
+        </div>
+        <div class="subtitle">
+            Welcome to the official Namovo page.
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <p>This is the central information hub for the Namovo municipality.</p>
+        <hr>
+        <p>Use the links in the top-right to navigate through the official records, 
+           available perks for citizens, and the secure staff gateway.</p>
+    </main>
+
+</body>
+</html>
