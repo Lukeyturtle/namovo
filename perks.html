@@ -3,129 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perks - Namovo Official Page</title>
+    <title>Secure Login - Namovo Official</title>
+    <!-- Favicon link added here -->
+    <link rel="icon" href="namovo-seal.png" type="image/png">
     <style>
-        /* Keeping the exact style from the Home page */
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
-
-        .top-banner {
-            background-color: #b32d2d;
-            height: 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 40px;
-            border-bottom: 3px solid #8b2222;
-        }
-
-        .logo-placeholder {
-            width: 120px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 1px dashed white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 12px;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 25px;
-            margin: 0;
-        }
-
-        .nav-links a {
-            color: #ffff00;
-            text-decoration: underline;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .nav-links a:hover { color: #ffffff; }
-
-        .page-header { margin-top: 20px; }
-
-        .title-box {
-            background-color: #b32d2d;
-            color: white;
-            padding: 10px 40px;
-            display: inline-block;
-            margin-bottom: 5px;
-        }
-
-        .title-box h1 {
-            margin: 0;
-            font-size: 32px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .main-content {
-            padding: 40px;
-            background-color: white;
-            margin: 20px 40px;
-            border: 1px solid #ccc;
-            min-height: 400px;
-            line-height: 1.6;
-        }
-        
-        .perks-list {
-            list-style-type: square;
-            color: #003366;
-            margin-left: 20px;
-            font-size: 18px;
-        }
-        .perks-list li { margin-bottom: 12px; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0f0f0; }
+        .top-banner { background-color: #b32d2d; height: 80px; display: flex; justify-content: space-between; align-items: center; padding: 0 40px; border-bottom: 3px solid #8b2222; }
+        .logo-img { height: 70px; width: auto; }
+        .logo-link { display: flex; align-items: center; } 
+        .nav-links { list-style: none; display: flex; gap: 25px; }
+        .nav-links a { color: #ffff00; text-decoration: underline; font-weight: bold; }
+        .title-box { background-color: #b32d2d; color: white; padding: 10px 40px; display: inline-block; margin-top: 20px; }
+        #login-container { width: 400px; margin: 50px auto; background: white; border: 2px solid #b32d2d; padding: 20px; box-shadow: 5px 5px 0px #ccc; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; }
+        input, select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; font-family: "Courier New", Courier, monospace; }
+        .login-btn { background-color: #b32d2d; color: white; border: none; padding: 10px; width: 100%; cursor: pointer; font-weight: bold; border-bottom: 3px solid #8b2222; }
+        .login-btn:hover { background-color: #8b2222; }
+        #portal-display { display: none; margin: 20px 40px; padding: 30px; background: #000; color: #00ff00; font-family: "Courier New", Courier, monospace; border: 5px solid #333; }
+        .error { color: red; font-size: 12px; display: none; margin-bottom: 10px; }
     </style>
 </head>
 <body>
-
-    <!-- Header Banner -->
     <header class="top-banner">
-        <div class="logo-placeholder">
-            [LOGO SPACE]
-        </div>
-        <nav>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="perks.html">Perks</a></li>
-                <li><a href="login.html">Login</a></li>
-            </ul>
-        </nav>
+        <!-- Image is now a link to index.html -->
+        <a href="index.html" class="logo-link">
+            <img src="namovo-seal.png" alt="Municipality of Namovo Seal" class="logo-img">
+        </a>
+        <nav><ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="perks.html">Perks</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul></nav>
     </header>
-
-    <!-- Perks Title Section -->
-    <div class="page-header">
-        <div class="title-box">
-            <h1>Perks</h1>
+    <div id="login-interface">
+        <div class="title-box"><h1>Staff Login</h1></div>
+        <div id="login-container">
+            <div id="error-msg" class="error">INVALID CREDENTIALS. ACCESS DENIED.</div>
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" id="username">
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" id="password">
+            </div>
+            <div class="form-group">
+                <label>Department Access:</label>
+                <select id="dept">
+                    <option value="NNEPP">NNEPP - Nuclear Plant</option>
+                    <option value="NIA">NIA - Intelligence</option>
+                    <option value="CBfANCO">CBfANCO - Military</option>
+                    <option value="Citizen">Citizen - Public Portal</option>
+                </select>
+            </div>
+            <button class="login-btn" onclick="checkLogin()">AUTHORISE ACCESS</button>
         </div>
     </div>
-
-    <!-- Perks Page Content -->
-    <main class="main-content">
-        <p>The Municipality of Namovo provides the following elite benefits to all registered citizens:</p>
-        
-        <ul class="perks-list">
-            <li><strong>24/7 Security:</strong> Constant municipal surveillance and protection for all residential sectors.</li>
-            <li><strong>High-Speed Connectivity:</strong> Free amazing WiFi throughout the entire municipality.</li>
-            <li><strong>Economic Growth:</strong> Extra capitalism enabled through deregulated local markets.</li>
-            <li><strong>Tax Benefits:</strong> Significant municipal tax exemptions for qualifying citizenship tiers.</li>
-            <li><strong>Military Excellence:</strong> Amazing military experiences via the CBfANCO training programs.</li>
-            <li><strong>Energy Independence:</strong> Subsidised access to the NNEPP nuclear energy grid.</li>
-            <li><strong>Intellectual Career Paths:</strong> Priority eligibility for recruitment into the NIA.</li>
-        </ul>
-        
-        <p><em>Notice: Perks are subject to compliance with the New Skailia Municipal Code.</em></p>
-    </main>
-
+    <div id="portal-display">
+        <h2 id="portal-title">ACCESSING SECURE DATA...</h2>
+        <hr style="border-color:#00ff00">
+        <div id="portal-content"></div>
+        <br>
+        <button onclick="location.reload()" style="background:#222; color:#00ff00; border:1px solid #00ff00; cursor:pointer;">LOGOUT</button>
+    </div>
+    <script>
+        function checkLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const dept = document.getElementById('dept').value;
+            const error = document.getElementById('error-msg');
+            if(user === "Namovo" && pass === "123456") {
+                document.getElementById('login-interface').style.display = 'none';
+                document.getElementById('portal-display').style.display = 'block';
+                showData(dept);
+            } else { error.style.display = 'block'; }
+        }
+        function showData(dept) {
+            const title = document.getElementById('portal-title');
+            const content = document.getElementById('portal-content');
+            if(dept === "NNEPP") {
+                title.innerText = "NNEPP REACTOR STATUS";
+                content.innerHTML = "REACTOR TEMP: 952 Kelvin<br>COOLANT PUMPS: OPEN<br>CONTROL RODS: INSERTED 58%<br>STATUS: STABLE";
+            } else if(dept === "NIA") {
+                title.innerText = "NIA CURRENT PROJECT: DELTA";
+                content.innerHTML = "PROJECT SPECIFICATION:<br>Delta is a portable concrete wall in the shape and size of a backpack. Prototype testing currently underway.";
+            } else if(dept === "CBfANCO") {
+                title.innerText = "CBfANCO STRATEGIC OVERVIEW";
+                content.innerHTML = "NAMOVO CONDITION: FAVOURABLE<br>SHIFT: DAY<br>GUARDS: ARMED / READY";
+            } else {
+                title.innerText = "CITIZEN INFORMATION PORTAL";
+                content.innerHTML = "WEATHER: Sunny | High 26° | Low 20°<br>ADVISORY: Should you carry your firearm? YES.<br>WIFI SIGNAL: 5 BARS THROUGHOUT MUNICIPALITY";
+            }
+        }
+    </script>
 </body>
 </html>
