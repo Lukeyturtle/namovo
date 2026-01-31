@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Login - Namovo Official</title>
-    <!-- Favicon link added here -->
     <link rel="icon" href="namovo-seal.png" type="image/png">
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0f0f0; }
@@ -20,16 +19,12 @@
         input, select { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; font-family: "Courier New", Courier, monospace; }
         .login-btn { background-color: #b32d2d; color: white; border: none; padding: 10px; width: 100%; cursor: pointer; font-weight: bold; border-bottom: 3px solid #8b2222; }
         .login-btn:hover { background-color: #8b2222; }
-        #portal-display { display: none; margin: 20px 40px; padding: 30px; background: #000; color: #00ff00; font-family: "Courier New", Courier, monospace; border: 5px solid #333; }
         .error { color: red; font-size: 12px; display: none; margin-bottom: 10px; }
     </style>
 </head>
 <body>
     <header class="top-banner">
-        <!-- Image is now a link to index.html -->
-        <a href="index.html" class="logo-link">
-            <img src="namovo-seal.png" alt="Municipality of Namovo Seal" class="logo-img">
-        </a>
+        <a href="index.html" class="logo-link"><img src="namovo-seal.png" alt="Municipality of Namovo Seal" class="logo-img"></a>
         <nav><ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
@@ -61,40 +56,19 @@
             <button class="login-btn" onclick="checkLogin()">AUTHORISE ACCESS</button>
         </div>
     </div>
-    <div id="portal-display">
-        <h2 id="portal-title">ACCESSING SECURE DATA...</h2>
-        <hr style="border-color:#00ff00">
-        <div id="portal-content"></div>
-        <br>
-        <button onclick="location.reload()" style="background:#222; color:#00ff00; border:1px solid #00ff00; cursor:pointer;">LOGOUT</button>
-    </div>
+
     <script>
         function checkLogin() {
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
-            const dept = document.getElementById('dept').value;
+            // Dept is ignored for actual login, all validated users go to the main portal page
             const error = document.getElementById('error-msg');
+
             if(user === "Namovo" && pass === "123456") {
-                document.getElementById('login-interface').style.display = 'none';
-                document.getElementById('portal-display').style.display = 'block';
-                showData(dept);
-            } else { error.style.display = 'block'; }
-        }
-        function showData(dept) {
-            const title = document.getElementById('portal-title');
-            const content = document.getElementById('portal-content');
-            if(dept === "NNEPP") {
-                title.innerText = "NNEPP REACTOR STATUS";
-                content.innerHTML = "REACTOR TEMP: 952 Kelvin<br>COOLANT PUMPS: OPEN<br>CONTROL RODS: INSERTED 58%<br>STATUS: STABLE";
-            } else if(dept === "NIA") {
-                title.innerText = "NIA CURRENT PROJECT: DELTA";
-                content.innerHTML = "PROJECT SPECIFICATION:<br>Delta is a portable concrete wall in the shape and size of a backpack. Prototype testing currently underway.";
-            } else if(dept === "CBfANCO") {
-                title.innerText = "CBfANCO STRATEGIC OVERVIEW";
-                content.innerHTML = "NAMOVO CONDITION: FAVOURABLE<br>SHIFT: DAY<br>GUARDS: ARMED / READY";
-            } else {
-                title.innerText = "CITIZEN INFORMATION PORTAL";
-                content.innerHTML = "WEATHER: Sunny | High 26° | Low 20°<br>ADVISORY: Should you carry your firearm? YES.<br>WIFI SIGNAL: 5 BARS THROUGHOUT MUNICIPALITY";
+                // Redirect to the new staff portal page
+                window.location.href = 'staff-portal.html'; 
+            } else { 
+                error.style.display = 'block'; 
             }
         }
     </script>
