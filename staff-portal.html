@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAFF PORTAL - SECURE</title>
+    <link rel="icon" href="namovo-seal.png" type="image/png">
+    <style>
+        /* Secure Terminal Aesthetic */
+        body { background-color: #000; color: #00ff00; font-family: "Courier New", Courier, monospace; margin: 0; padding: 0; }
+        .portal-header { background-color: #333; padding: 10px 40px; border-bottom: 2px solid #00ff00; }
+        .portal-container { padding: 40px; }
+        h1, h2 { border-bottom: 1px solid #00ff00; padding-bottom: 5px; }
+        .data-block { margin-bottom: 20px; padding: 10px; border: 1px dashed #00ff00; }
+        .logout-btn { background:#222; color:#00ff00; border:1px solid #00ff00; cursor:pointer; padding: 10px; }
+    </style>
+</head>
+<body>
+    <div class="portal-header">
+        Namovo Municipality: Level 1 Access Terminal
+    </div>
+
+    <div class="portal-container">
+        <h1>Welcome, Agent Namovo (ID: 139873)</h1>
+        <p>Access Level: Citizen, NNEPP, NIA, CBfANCO</p>
+        <hr>
+
+        <h2>NNEPP FAKE REACTOR DATA</h2>
+        <div class="data-block">
+            Reactor Temp: 952 Kelvin<br>
+            Coolant Pumps: Open<br>
+            Rods Inserted: 58%<br>
+            <strong>Status: Stable</strong>
+        </div>
+
+        <h2>NIA CURRENT PROJECT: DELTA</h2>
+         <div class="data-block">
+            Project Specification:<br>
+            Delta is a portable concrete wall in the shape and size of a backpack. Prototype testing currently underway.
+        </div>
+
+        <h2>CBfANCO STRATEGIC OVERVIEW</h2>
+         <div class="data-block">
+            Namovo condition: Favourable<br>
+            Shift: Day<br>
+            Guards: Armed / Ready
+        </div>
+
+        <h2>CITIZEN WEATHER ADVISORY</h2>
+         <div class="data-block">
+            Weather: Sunny with a high of 26° and a low of 20°.<br>
+            Advisory: Should you carry your firearm? Answer: Yes.<br>
+            Wifi: 5 bars throughout the Municipality
+        </div>
+        
+        <button class="logout-btn" onclick="window.location.href='login.html'">LOGOUT OF SYSTEM</button>
+    </div>
+</body>
+</html>
