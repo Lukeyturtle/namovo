@@ -28,7 +28,7 @@
 
         /* Category Filter Tabs */
         .filter-tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #b32d2d; padding-bottom: 10px; }
-        .tab-btn { background: #e0e0e0; border: 1px solid #ccc; padding: 10px 20px; font-weight: bold; cursor: pointer; color: #333; }
+        .tab-btn { background: #e0e0e0; border: 1px solid #ccc; padding: 10px 20px; font-weight: bold; cursor: pointer; color: #333; border-radius: 3px 3px 0 0; }
         .tab-btn.active { background: #b32d2d; color: white; border-color: #8b2222; }
 
         /* Grid Items */
@@ -37,7 +37,7 @@
         .record-card:hover { background: #f5f5f5; }
         .record-card.news { border-left-color: #b32d2d; }
         .record-card.pdf { border-left-color: #ff9900; }
-        .record-card.classified { border-left-color: #ff0000; background: #121212; color: #e0e0e0; display: none; } /* Hidden from initial list views until unlocked */
+        .record-card.classified { border-left-color: #ff0000; background: #121212; color: #e0e0e0; display: none; } 
         .record-card h3 { margin: 0 0 5px 0; color: #003366; }
         .record-card.news h3 { color: #b32d2d; }
         .record-card.classified h3 { color: #ff3333; }
@@ -127,7 +127,7 @@
                 <a href="news.html" class="record-link">Read Full Bulletin</a>
             </div>
 
-            <!-- HIDDEN CLASSIFIED RECORD (Findable via global database query) -->
+            <!-- HIDDEN CLASSIFIED RECORD -->
             <div class="record-card classified" data-category="hidden" id="iota-log">
                 <span class="record-badge">⚠️ CLASSIFIED EYES ONLY</span>
                 <h3>Video 1: Iota Squad GoPro Recovery Log</h3>
@@ -159,8 +159,11 @@
             
             document.querySelectorAll('.record-card').forEach(card => {
                 if(category === 'all') {
-                    if(card.classList.contains('classified') && card.style.display !== 'block') card.style.display = 'none';
-else if (!card.classList.contains('classified')) card.style.display = 'block';
+                    if(card.classList.contains('classified') && card.style.display !== 'block') {
+                        card.style.display = 'none';
+                    } else if (!card.classList.contains('classified')) {
+                        card.style.display = 'block';
+}
 } else if(card.getAttribute('data-category') === category) {
 card.style.display = 'block';
 } else {
@@ -178,7 +181,7 @@ document.getElementById('searchResults').innerHTML = "";
 document.getElementById('searchInput').focus();
 }
 }
-// Central Index Database
+// Central Index Database Array
 const archiveData = [
 { title: "Decree No. 001: The Firearms Act", desc: "Mandatory carrying laws and survival guide PDF.", link: "firearms-act.pdf", type: "PDF" },
 { title: "Transport & Containment Survival Guide", desc: "Instructional PDF guide for transport routes.", link: "transport-survival.pdf", type: "PDF" },
@@ -186,7 +189,7 @@ const archiveData = [
 { title: "Governor Addresses Council on Project Delta", desc: "News article on portable concrete backpack wall.", link: "news.html", type: "News" },
 { title: "⚠️ CLASSIFIED: Video 1 - Iota Squad GoPro Recovery Log", desc: "[RESTRICTED DATA] Hidden tactical operations file.", link: "SECRET_LOG", type: "Classified" }
 ];
-// Search Engine Engine
+// Search Logic Processing Function
 function executeSearch() {
 const query = document.getElementById('searchInput').value.toLowerCase();
 const resultsDiv = document.getElementById('searchResults');
@@ -195,7 +198,6 @@ if(query.trim() === "") return;
 archiveData.forEach(item => {
 const matchesQuery = item.title.toLowerCase().includes(query) ||
 item.desc.toLowerCase().includes(query);
-// If query is exactly "reac", instantly return true for everything
 if (matchesQuery || query === "reac") {
 const div = document.createElement('div');
 div.className = "search-result-item";
