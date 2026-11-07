@@ -24,7 +24,7 @@
         .tab-btn { background: #e0e0e0; border: 1px solid #ccc; padding: 10px 20px; font-weight: bold; cursor: pointer; color: #333; border-radius: 3px 3px 0 0; }
         .tab-btn.active { background: #b32d2d; color: white; border-color: #8b2222; }
         .records-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        .record-card { padding: 15px; border: 1px solid #ccc; background: #fafafa; border-left: 5px solid #003366; transition: 0.2s; }
+        .record-card { padding: 15px; border: 1px solid #ccc; background: #fafafa; border-left: 5px solid #003366; transition: 0.2s; display: block; }
         .record-card:hover { background: #f5f5f5; }
         .record-card.news { border-left-color: #b32d2d; }
         .record-card.pdf { border-left-color: #ff9900; }
@@ -40,8 +40,14 @@
         .record-card.classified p { color: #e0e0e0 !important; }
         .record-card.classified .record-badge { background: #ff0000; color: white !important; }
         .record-card.classified .record-link { color: #ffff00 !important; }
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; margin-top: 15px; border: 1px solid #333; }
+        .video-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-window { background: #1e1e1e; border: 3px solid #b32d2d; width: 90%; max-width: 700px; padding: 20px; color: #e0e0e0; font-family: "Courier New", Courier, monospace; box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.3); position: relative; }
+        .modal-close { position: absolute; top: 10px; right: 15px; font-size: 28px; color: #ff3333; cursor: pointer; background: none; border: none; font-weight: bold; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; margin: 15px 0; border: 1px solid #333; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .transcript-box { background: #121212; padding: 15px; border-left: 4px solid #b32d2d; max-height: 200px; overflow-y: auto; font-size: 13px; line-height: 1.5; color: #00ff00; }
+        .speaker-dave { color: #5dade2; font-weight: bold; }
+        .speaker-john { color: #f4d03f; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -105,13 +111,26 @@
             <div class="record-card classified" data-category="hidden" id="iota-log" data-keywords="classified eyes only video 1 iota squad gopro recovery log restricted data tactical footage hero black18 camera architecture logs">
                 <span class="record-badge">⚠️ CLASSIFIED EYES ONLY</span>
                 <h3>Video 1: Iota Squad GoPro Recovery Log</h3>
-                <p>[DECRYPTED SECTOR] Recovered tactical footage from tactical operations unit near outer wall sector. System matching parameters from Hero Black18 camera architecture logs.</p>
-                <div class="video-wrapper">
-                    <iframe src="https://youtube.com" title="Iota Squad GoPro Recovery Log" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </div>
+                <p>[DECRYPTED SECTOR] Recovered tactical footage from tactical operations unit near outer wall sector.</p>
+                <span class="record-link" onclick="openVideoModal()">Access Video Feed</span>
             </div>
         </div>
     </main>
+
+    <div id="videoModal" class="video-modal">
+        <div class="modal-window">
+            <button class="modal-close" onclick="closeVideoModal()">&times;</button>
+            <h3>DECRYPTED FEED: Iota_Squad_A_GoPro.mov</h3>
+            <p style="font-size: 12px; margin: 0; color: #888;">Source Hardware: GoPro Hero Black18</p>
+            
+            <div class="video-wrapper">
+                <iframe src="https://youtube.com" title="Iota Squad GoPro Recovery Log" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+
+            <p style="font-size: 14px; font-weight: bold; margin-bottom: 5px; color: #ff3333;">Audio Transcription Log:</p>
+            <div class="transcript-box" id="modalTranscript"></div>
+        </div>
+    </div>
 
     <script>
         let currentCategory = 'all';
@@ -119,31 +138,84 @@
         function setCategory(category) {
             currentCategory = category;
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('tab-' + category).classList.add('active');
-            filterRecords();
-        }
+document.getElementById('tab-' + category).classList.add('active');
+filterRecords();
+}
+function filterRecords() {
+const query = document.getElementById('recordSearch').value.toLowerCase();
+const cards = document.querySelectorAll('.record-card');
+let unlockedSecret = (query.trim() !== '' && 'iota'.includes(query)) || query.includes('iota');
+cards.forEach(card => {
+const keywords = card.getAttribute('data-keywords') || '';
+const cardCategory = card.getAttribute('data-category');
+const matchesSearch = keywords.includes(query) || query === 'reac' || query.trim() === '';
+const matchesTab = (currentCategory === 'all' || cardCategory === currentCategory);
+if (card.classList.contains('classified')) {
+if (unlockedSecret) { card.style.setProperty('display', 'block', 'important'); }
+else { card.style.display = 'none'; }
+} else {
+if (matchesSearch && matchesTab) { card.style.display = 'block'; }
+else { card.style.display = 'none'; }
+}
+});
+}
+const lines = [
+"[15:23 on 10/12/2032]
 
-        function filterRecords() {
-            const query = document.getElementById('recordSearch').value.toLowerCase();
-            const cards = document.querySelectorAll('.record-card');
-            let unlockedSecret = false;
-            if (query.includes('iota')) { unlockedSecret = true; }
+",
+"Dave: "Yo John you good?"
+",
+"John: "Yeah I'm fine, this place just gives me the creeps, you know?"
+",
+"Dave: "Yeah, I know. Did you hear that noise earlier?"
+",
+"John: "Yeah, it was weird."
+",
+"Dave: "Imma’ do a mission report and set up camp right here"
+",
+"John: "Ok imma’ sit down with you"
+",
+"Dave: "Did you hear that noise just now?"
+",
+"John: "Yeah it sounded… demonic"
+",
+"Dave: "This place is freaking me ou-"
+",
+"John: "Are you OK? I hear footsteps, Imma’ go out for a sec"
 
-            cards.forEach(card => {
-                const keywords = card.getAttribute('data-keywords') || '';
-                const cardCategory = card.getAttribute('data-category');
-                const matchesSearch = keywords.includes(query) || query === 'reac' || query.trim() === '';
-                const matchesTab = (currentCategory === 'all' || cardCategory === currentCategory);
+",
+"[15:43 on 10/12/2032]
 
-                if (card.classList.contains('classified')) {
-                    if (unlockedSecret) { card.style.display = 'block'; }
-                    else { card.style.display = 'none'; }
-                } else {
-                    if (matchesSearch && matchesTab) { card.style.display = 'block'; }
-                    else { card.style.display = 'none'; }
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+",
+"John: "Shoot, my radio is broken"
+",
+"Dave: "What just happened, I was talking to you and then blackness"
+",
+"John: "Do you have your radio or TacTab5?"
+",
+"Dave: checks pockets "No"
+",
+"John: "Ok. I’m looking at you and you look pretty bad. You’ve got scratches and bruises everywhere, you allright?."
+",
+"Dave: "I can’t really feel anything. But I do feel pretty lightheaded and dizzy."
+",
+"John: "You might have a concussion. I would call for help but you don’t have anything and my radio broke."
+",
+"Dave: "Do you remember anything, because you look fine."
+",
+"John: "I mean kinda. I was there and then I heard footsteps that were pretty weird, you had like passed out. I walked a little bit away and then all I heard was screaming. After the noises stopped I went back to check on you and that’s where we are. I left the GoPro with you."
+",
+"Dave: "Oh wait, the GoPro, I wonder if it’s still on."
+",
+"John: "Maybe, if it's still recording stop and check the footage."
+",
+"Dave: "Got it."
+
+",
+"~ END OF LOG ~"
+];
+function openVideoModal() {
+document.getElementById('modalTranscript').innerHTML = lines.join("");
+document.getElementById('videoModal').style.display = 'flex';
+}
+function closeVideoModal() { document.getElementById('videoModal').style.display = 'none'; }
