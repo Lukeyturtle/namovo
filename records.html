@@ -138,84 +138,65 @@
         function setCategory(category) {
             currentCategory = category;
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-document.getElementById('tab-' + category).classList.add('active');
-filterRecords();
-}
-function filterRecords() {
-const query = document.getElementById('recordSearch').value.toLowerCase();
-const cards = document.querySelectorAll('.record-card');
-let unlockedSecret = (query.trim() !== '' && 'iota'.includes(query)) || query.includes('iota');
-cards.forEach(card => {
-const keywords = card.getAttribute('data-keywords') || '';
-const cardCategory = card.getAttribute('data-category');
-const matchesSearch = keywords.includes(query) || query === 'reac' || query.trim() === '';
-const matchesTab = (currentCategory === 'all' || cardCategory === currentCategory);
-if (card.classList.contains('classified')) {
-if (unlockedSecret) { card.style.setProperty('display', 'block', 'important'); }
-else { card.style.display = 'none'; }
-} else {
-if (matchesSearch && matchesTab) { card.style.display = 'block'; }
-else { card.style.display = 'none'; }
-}
-});
-}
-const lines = [
-"[15:23 on 10/12/2032]
+            document.getElementById('tab-' + category).classList.add('active');
+            filterRecords();
+        }
 
-",
-"Dave: "Yo John you good?"
-",
-"John: "Yeah I'm fine, this place just gives me the creeps, you know?"
-",
-"Dave: "Yeah, I know. Did you hear that noise earlier?"
-",
-"John: "Yeah, it was weird."
-",
-"Dave: "Imma’ do a mission report and set up camp right here"
-",
-"John: "Ok imma’ sit down with you"
-",
-"Dave: "Did you hear that noise just now?"
-",
-"John: "Yeah it sounded… demonic"
-",
-"Dave: "This place is freaking me ou-"
-",
-"John: "Are you OK? I hear footsteps, Imma’ go out for a sec"
+        function filterRecords() {
+            const query = document.getElementById('recordSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.record-card');
+            let unlockedSecret = (query.trim() !== '' && 'iota'.includes(query)) || query.includes('iota');
 
-",
-"[15:43 on 10/12/2032]
+            cards.forEach(card => {
+                const keywords = card.getAttribute('data-keywords') || '';
+                const cardCategory = card.getAttribute('data-category');
+                
+                const matchesSearch = keywords.includes(query) || query === 'reac' || query.trim() === '';
+                const matchesTab = (currentCategory === 'all' || cardCategory === currentCategory);
 
-",
-"John: "Shoot, my radio is broken"
-",
-"Dave: "What just happened, I was talking to you and then blackness"
-",
-"John: "Do you have your radio or TacTab5?"
-",
-"Dave: checks pockets "No"
-",
-"John: "Ok. I’m looking at you and you look pretty bad. You’ve got scratches and bruises everywhere, you allright?."
-",
-"Dave: "I can’t really feel anything. But I do feel pretty lightheaded and dizzy."
-",
-"John: "You might have a concussion. I would call for help but you don’t have anything and my radio broke."
-",
-"Dave: "Do you remember anything, because you look fine."
-",
-"John: "I mean kinda. I was there and then I heard footsteps that were pretty weird, you had like passed out. I walked a little bit away and then all I heard was screaming. After the noises stopped I went back to check on you and that’s where we are. I left the GoPro with you."
-",
-"Dave: "Oh wait, the GoPro, I wonder if it’s still on."
-",
-"John: "Maybe, if it's still recording stop and check the footage."
-",
-"Dave: "Got it."
+                if (card.classList.contains('classified')) {
+                    if (unlockedSecret) { card.style.setProperty('display', 'block', 'important'); }
+                    else { card.style.display = 'none'; }
+                } else {
+                    if (matchesSearch && matchesTab) { card.style.display = 'block'; }
+                    else { card.style.display = 'none'; }
+                }
+            });
+        }
 
-",
-"~ END OF LOG ~"
-];
-function openVideoModal() {
-document.getElementById('modalTranscript').innerHTML = lines.join("");
-document.getElementById('videoModal').style.display = 'flex';
-}
-function closeVideoModal() { document.getElementById('videoModal').style.display = 'none'; }
+        const lines = [
+            "<strong>[15:23 on 10/12/2032]</strong><br><br>",
+            "<span class='speaker-dave'>Dave:</span> \"Yo John you good?\"<br>",
+            "<span class='speaker-john'>John:</span> \"Yeah I'm fine, this place just gives me the creeps, you know?\"<br>",
+            "<span class='speaker-dave'>Dave:</span> \"Yeah, I know. Did you hear that noise earlier?\"<br>",
+            "<span class='speaker-john'>John:</span> \"Yeah, it was weird.\"<br>",
+            "<span class='speaker-dave'>Dave:</span> \"Imma’ do a mission report and set up camp right here\"<br>",
+            "<span class='speaker-john'>John:</span> \"Ok imma’ sit down with you\"<br>",
+            "<span class='speaker-dave'>Dave:</span> \"Did you hear that noise just now?\"<br>",
+            "<span class='speaker-john'>John:</span> \"Yeah it sounded… demonic\"<br>",
+            "<span class='speaker-dave'>Dave:</span> \"This place is freaking me ou-\"<br>",
+            "<span class='speaker-john'>John:</span> \"Are you OK? I hear footsteps, Imma’ go out for a sec\"<br><br>",
+            "<strong>[15:43 on 10/12/2032]</strong><br><br>",
+            "<span class='speaker-john'>John:</span> \"Shoot, my radio is broken\"<br>",
+            "<span class='speaker-dave'>Dave:</span> \"What just happened, I was talking to you and then blackness\"<br>",
+            "<span class='speaker-john'>John:</span> \"Do you have your radio or TacTab5?\"<br>",
+            "<span class='speaker-dave'>Dave:</span> *checks pockets* \"No\"<br>",
+            "<span class='speaker-john'>John:</span> \"Ok. I’m looking at you and you look pretty bad. You’ve got scratches and bruises everywhere, you allright?.\"<br>",
+            "<span class='speaker-dave'>Dave:</span> \"I can’t really feel anything. But I do feel pretty lightheaded and dizzy.\"<br>",
+            "<span class='speaker-john'>John:</span> \"You might have a concussion. I would call for help but you don’t have anything and my radio broke.\"<br>",
+            "<span class='speaker-dave'>Dave:</span> \"Do you remember anything, because you look fine.\"<br>",
+            "<span class='speaker-john'>John:</span> \"I mean kinda. I was there and then I heard footsteps that were pretty weird, you had like passed out. I walked a little bit away and then all I heard was screaming. After the noises stopped I went back to check on you and that’s where we are. I left the GoPro with you.\"<br>",
+            "<span class='speaker-dave'>Dave:</span> \"Oh wait, the GoPro, I wonder if it’s still on.\"<br>",
+            "<span class='speaker-john'>John:</span> \"Maybe, if it's still recording stop and check the footage.\"<br>",
+            "<span class='speaker-dave'>Dave:</span> \"Got it.\"<br><br>",
+            "<strong>~ END OF LOG ~</strong>"
+        ];
+
+        function openVideoModal() { 
+            document.getElementById('modalTranscript').innerHTML = lines.join("");
+            document.getElementById('videoModal').style.display = 'flex'; 
+        }
+        function closeVideoModal() { document.getElementById('videoModal').style.display = 'none'; }
+    </script>
+</body>
+</html>
