@@ -37,13 +37,20 @@
         .record-card:hover { background: #f5f5f5; }
         .record-card.news { border-left-color: #b32d2d; }
         .record-card.pdf { border-left-color: #ff9900; }
-        .record-card.classified { border-left-color: #000000; background: #fff0f0; display: none; } /* Hidden from general view */
+        .record-card.classified { border-left-color: #ff0000; background: #121212; color: #e0e0e0; display: none; } /* Hidden from initial list views until unlocked */
         .record-card h3 { margin: 0 0 5px 0; color: #003366; }
         .record-card.news h3 { color: #b32d2d; }
+        .record-card.classified h3 { color: #ff3333; }
         .record-badge { display: inline-block; padding: 2px 6px; font-size: 11px; font-weight: bold; color: white; background: #666; margin-bottom: 5px; text-transform: uppercase; }
         .record-card.news .record-badge { background: #b32d2d; }
         .record-card.pdf .record-badge { background: #ff9900; }
+        .record-card.classified .record-badge { background: #ff0000; }
         .record-link { color: #003366; font-weight: bold; text-decoration: underline; cursor: pointer; }
+        .record-card.classified .record-link { color: #ffff00; }
+
+        /* Embedded Player for Secret Log Card */
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; margin-top: 15px; border: 1px solid #333; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
         /* Search Overlay Modal */
         .search-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; color: white; }
@@ -68,7 +75,6 @@
                 <li><a href="news.html">News</a></li>
                 <li><a href="login.html">Login</a></li>
             </ul></nav>
-            <!-- Global Magnifying Glass Trigger -->
             <button class="search-trigger" onclick="toggleSearch(true)">🔍</button>
         </div>
     </header>
@@ -121,12 +127,16 @@
                 <a href="news.html" class="record-link">Read Full Bulletin</a>
             </div>
 
-            <!-- HIDDEN CLASSIFIED RECORD (Hidden from lists, only findable via Search!) -->
+            <!-- HIDDEN CLASSIFIED RECORD (Findable via global database query) -->
             <div class="record-card classified" data-category="hidden" id="iota-log">
-                <span class="record-badge" style="background:red;">⚠️ CLASSIFIED EYES ONLY</span>
-                <h3>Iota Squad GoPro Recovery Log</h3>
-                <p>[RESTRICTED] Recovered tactical footage from tactical operations unit near the outer wall sector.</p>
-                <span class="record-link" onclick="alert('DECRYPTING FOOTAGE... [Error: Connection Terminated]')">Access Video Feed</span>
+                <span class="record-badge">⚠️ CLASSIFIED EYES ONLY</span>
+                <h3>Video 1: Iota Squad GoPro Recovery Log</h3>
+                <p>[DECRYPTED SECTOR] Recovered tactical footage from tactical operations unit near outer wall sector. System matching parameters from Hero Black18 camera architecture logs.</p>
+                
+                <!-- YouTube Inline Player -->
+                <div class="video-wrapper">
+                    <iframe src="https://youtube.com" title="Iota Squad GoPro Recovery Log" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div>
             </div>
 
         </div>
@@ -136,7 +146,7 @@
     <div id="searchModal" class="search-modal">
         <button class="search-close" onclick="toggleSearch(false)">&times;</button>
         <h2>MUNICIPAL CENTRAL ARCHIVE SEARCH</h2>
-        <p>Enter designation code or keywords (Try searching: <i>firearm</i>, <i>delta</i>, or <i>iota</i>)</p>
+        <p>Enter designation code or keywords (Try searching: <i>firearm</i>, <i>delta</i>, or <i>reac</i>)</p>
         <input type="text" id="searchInput" class="search-box" placeholder="Query database..." oninput="executeSearch()">
         <div id="searchResults" class="search-results"></div>
     </div>
@@ -149,32 +159,63 @@
             
             document.querySelectorAll('.record-card').forEach(card => {
                 if(category === 'all') {
-                    // Do not show classified elements in "All" unless explicitly searched
-                    if(card.classList.contains('classified')) card.style.display = 'none';
-                    else card.style.display = 'block';
-                } else if(card.getAttribute('data-category') === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        // Search Modal Toggling
-        function toggleSearch(show) {
-            const modal = document.getElementById('searchModal');
-            modal.style.display = show ? 'flex' : 'none';
-            if(show) {
-                document.getElementById('searchInput').focus();
-            }
-        }
-
-        // Database Search Engine (Includes Hidden Easter Eggs for book readers!)
-        const archiveData = [const archiveData = [
-    { title: "Decree No. 001: The Firearms Act", desc: "Mandatory carrying laws and survival guide PDF.", link: "firearms-act.pdf", type: "PDF" },
-    { title: "OPCOM Transmission 1 - Power Routing Order", desc: "Directives for Iota, Zeta, and Beta Squads on cable routing.", link: "#", type: "Transmission" },
-    { title: "Medical Notes 1 - Mikhail Barahavski", desc: "Field diagnosis by Medic Cal Leonard regarding potential contamination.", link: "#", type: "Medical" },
-    { title: "Scout Report 1 - Epsilon Squad", desc: "Initial clear report for Reactors 1-5 prior to incident.", link: "#", type: "Scout" },
-    { title: "⚠️ CLASSIFIED: Video 1 - Iota Squad A GoPro", desc: "Recovered footage from Hero Black18. Date: 10/12/2032.", link: "iota-video.html", type: "Classified" }
+                    if(card.classList.contains('classified') && card.style.display !== 'block') card.style.display = 'none';
+else if (!card.classList.contains('classified')) card.style.display = 'block';
+} else if(card.getAttribute('data-category') === category) {
+card.style.display = 'block';
+} else {
+card.style.display = 'none';
+}
+});
+}
+// Search Modal Toggling
+function toggleSearch(show) {
+const modal = document.getElementById('searchModal');
+modal.style.display = show ? 'flex' : 'none';
+if(show) {
+document.getElementById('searchInput').value = "";
+document.getElementById('searchResults').innerHTML = "";
+document.getElementById('searchInput').focus();
+}
+}
+// Central Index Database
+const archiveData = [
+{ title: "Decree No. 001: The Firearms Act", desc: "Mandatory carrying laws and survival guide PDF.", link: "firearms-act.pdf", type: "PDF" },
+{ title: "Transport & Containment Survival Guide", desc: "Instructional PDF guide for transport routes.", link: "transport-survival.pdf", type: "PDF" },
+{ title: "NNEPP Power Grid Broadcast", desc: "Automated transmission segment feed.", link: "TRANSMISSION_ALERT", type: "Feed" },
+{ title: "Governor Addresses Council on Project Delta", desc: "News article on portable concrete backpack wall.", link: "news.html", type: "News" },
+{ title: "⚠️ CLASSIFIED: Video 1 - Iota Squad GoPro Recovery Log", desc: "[RESTRICTED DATA] Hidden tactical operations file.", link: "SECRET_LOG", type: "Classified" }
 ];
+// Search Engine Engine
+function executeSearch() {
+const query = document.getElementById('searchInput').value.toLowerCase();
+const resultsDiv = document.getElementById('searchResults');
+resultsDiv.innerHTML = "";
+if(query.trim() === "") return;
+archiveData.forEach(item => {
+const matchesQuery = item.title.toLowerCase().includes(query) ||
+item.desc.toLowerCase().includes(query);
+// If query is exactly "reac", instantly return true for everything
+if (matchesQuery || query === "reac") {
+const div = document.createElement('div');
+div.className = "search-result-item";
+div.innerHTML = <span>[${item.type}]</span> ${item.title}<br><small style="color:#aaa">${item.desc}</small>;
+div.onclick = function() {
+if(item.link === "SECRET_LOG") {
+toggleSearch(false);
+const iotaCard = document.getElementById('iota-log');
+iotaCard.style.display = "block";
+iotaCard.scrollIntoView({ behavior: 'smooth' });
+alert("CRITICAL ALARM: Classified file 'Iota Squad' injected into main directory view.");
+} else if(item.link === "TRANSMISSION_ALERT") {
+alert('Playing Transmission Segment...');
+} else {
+window.location.href = item.link;
+}
+};
+resultsDiv.appendChild(div);
+}
+});
+}
+
 
