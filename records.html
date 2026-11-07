@@ -11,20 +11,20 @@
         .top-banner { background-color: #b32d2d; height: 80px; display: flex; justify-content: space-between; align-items: center; padding: 0 40px; border-bottom: 3px solid #8b2222; }
         .logo-img { height: 70px; width: auto; }
         .logo-link { display: flex; align-items: center; } 
-        .header-right { display: flex; align-items: center; gap: 30px; }
         .nav-links { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
         .nav-links a { color: #ffff00; text-decoration: underline; font-weight: bold; font-size: 16px; }
         .nav-links a:hover { color: #ffffff; }
-
-        /* Search Icon */
-        .search-trigger { font-size: 24px; color: #ffff00; cursor: pointer; background: none; border: none; padding: 0; }
-        .search-trigger:hover { color: white; }
 
         /* Layout */
         .page-header { margin-top: 20px; }
         .title-box { background-color: #b32d2d; color: white; padding: 10px 40px; display: inline-block; margin-bottom: 5px; }
         .title-box h1 { margin: 0; font-size: 32px; text-transform: uppercase; }
         .main-content { padding: 40px; background-color: white; margin: 20px 40px; border: 1px solid #ccc; min-height: 500px; }
+
+        /* Inline Search Bar Area */
+        .search-area { margin-bottom: 20px; }
+        .search-box { width: 100%; max-width: 500px; padding: 12px; font-size: 16px; border: 2px solid #b32d2d; background: #fff; color: #333; box-sizing: border-box; }
+        .search-box:focus { outline: none; background: #fffdf5; }
 
         /* Category Filter Tabs */
         .filter-tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #b32d2d; padding-bottom: 10px; }
@@ -51,32 +51,20 @@
         /* Embedded Player for Secret Log Card */
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; margin-top: 15px; border: 1px solid #333; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-
-        /* Search Overlay Modal */
-        .search-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center; flex-direction: column; color: white; }
-        .search-box { width: 60%; max-width: 600px; padding: 15px; font-size: 20px; border: 2px solid #ffff00; background: #222; color: #ffff00; font-family: monospace; }
-        .search-close { position: absolute; top: 30px; right: 40px; font-size: 40px; color: white; cursor: pointer; background: none; border: none; }
-        .search-results { width: 60%; max-width: 600px; margin-top: 20px; max-height: 50vh; overflow-y: auto; text-align: left; }
-        .search-result-item { padding: 10px; border-bottom: 1px solid #333; cursor: pointer; }
-        .search-result-item:hover { background: #222; }
-        .search-result-item span { color: #ffff00; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <header class="top-banner">
         <a href="index.html" class="logo-link"><img src="namovo-seal.png" alt="Municipality of Namovo Seal" class="logo-img"></a>
-        <div class="header-right">
-            <nav><ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="perks.html">Perks</a></li>
-                <li><a href="records.html">Records</a></li>
-                <li><a href="news.html">News</a></li>
-                <li><a href="login.html">Login</a></li>
-            </ul></nav>
-            <button class="search-trigger" onclick="toggleSearch(true)">🔍</button>
-        </div>
+        <nav><ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="perks.html">Perks</a></li>
+            <li><a href="records.html">Records</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul></nav>
     </header>
 
     <div class="page-header">
@@ -84,19 +72,24 @@
     </div>
 
     <main class="main-content">
+        <!-- Inline Record Search Bar -->
+        <div class="search-area">
+            <input type="text" id="recordSearch" class="search-box" placeholder="Search archive files... (Try 'firearm', 'delta', or 'reac')" oninput="filterRecords()">
+        </div>
+
         <!-- Filter Tabs -->
         <div class="filter-tabs">
-            <button class="tab-btn active" onclick="filterCategory('all', this)">All Records</button>
-            <button class="tab-btn" onclick="filterCategory('transmission', this)">Transmissions & Videos</button>
-            <button class="tab-btn" onclick="filterCategory('pdf', this)">Guides & PDFs</button>
-            <button class="tab-btn" onclick="filterCategory('news', this)">News Reports</button>
+            <button class="tab-btn active" id="tab-all" onclick="setCategory('all')">All Records</button>
+            <button class="tab-btn" id="tab-transmission" onclick="setCategory('transmission')">Transmissions & Videos</button>
+            <button class="tab-btn" id="tab-pdf" onclick="setCategory('pdf')">Guides & PDFs</button>
+            <button class="tab-btn" id="tab-news" onclick="setCategory('news')">News Reports</button>
         </div>
 
         <!-- Database Grid -->
         <div class="records-grid" id="database-grid">
             
             <!-- PDF Document -->
-            <div class="record-card pdf" data-category="pdf">
+            <div class="record-card pdf" data-category="pdf" data-keywords="decree 001 firearms act mandatory carrying laws survival guide pdf">
                 <span class="record-badge">Instructional Guide</span>
                 <h3>Decree No. 001: The Firearms Act</h3>
                 <p>Mandatory carrying regulations and survival transit guidelines within the secure perimeter zones of New Skailia.</p>
@@ -104,7 +97,7 @@
             </div>
 
             <!-- PDF Document 2 -->
-            <div class="record-card pdf" data-category="pdf">
+            <div class="record-card pdf" data-category="pdf" data-keywords="transport containment survival guide manual instructions routes">
                 <span class="record-badge">Transport Manual</span>
                 <h3>Transport & Containment Survival Guide</h3>
                 <p>Standard operating procedures for civilian movement through high-alert municipal pathways.</p>
@@ -112,7 +105,7 @@
             </div>
 
             <!-- Transmission / Video -->
-            <div class="record-card transmission" data-category="transmission">
+            <div class="record-card transmission" data-category="transmission" data-keywords="nnepp power grid broadcast automated transmission segment feed nuclear energy plant">
                 <span class="record-badge">Audio/Video Link</span>
                 <h3>NNEPP Power Grid Broadcast</h3>
                 <p>Archived automated status transmission from the main server arrays at the Nuclear Energy Power Plant.</p>
@@ -120,7 +113,7 @@
             </div>
 
             <!-- News Report -->
-            <div class="record-card news" data-category="news">
+            <div class="record-card news" data-category="news" data-keywords="governor addresses council project delta news article portable concrete backpack wall bulletin announcements">
                 <span class="record-badge">News Report</span>
                 <h3>Governor Addresses Council on Project Delta</h3>
                 <p>The Governor highlights the tactical advantages of the newest backpack-sized concrete barrier initiative.</p>
@@ -128,12 +121,11 @@
             </div>
 
             <!-- HIDDEN CLASSIFIED RECORD -->
-            <div class="record-card classified" data-category="hidden" id="iota-log">
+            <div class="record-card classified" data-category="hidden" id="iota-log" data-keywords="classified eyes only video 1 iota squad gopro recovery log restricted data tactical footage hero black18 camera architecture logs">
                 <span class="record-badge">⚠️ CLASSIFIED EYES ONLY</span>
                 <h3>Video 1: Iota Squad GoPro Recovery Log</h3>
                 <p>[DECRYPTED SECTOR] Recovered tactical footage from tactical operations unit near outer wall sector. System matching parameters from Hero Black18 camera architecture logs.</p>
                 
-                <!-- YouTube Inline Player -->
                 <div class="video-wrapper">
                     <iframe src="https://youtube.com" title="Iota Squad GoPro Recovery Log" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
@@ -142,82 +134,52 @@
         </div>
     </main>
 
-    <!-- Global Search Modal Overlay -->
-    <div id="searchModal" class="search-modal">
-        <button class="search-close" onclick="toggleSearch(false)">&times;</button>
-        <h2>MUNICIPAL CENTRAL ARCHIVE SEARCH</h2>
-        <p>Enter designation code or keywords (Try searching: <i>firearm</i>, <i>delta</i>, or <i>reac</i>)</p>
-        <input type="text" id="searchInput" class="search-box" placeholder="Query database..." oninput="executeSearch()">
-        <div id="searchResults" class="search-results"></div>
-    </div>
-
     <script>
-        // Tab Filtering Logic
-        function filterCategory(category, element) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
+        let currentCategory = 'all';
+
+        function setCategory(category) {
+            currentCategory = category;
             
-            document.querySelectorAll('.record-card').forEach(card => {
-                if(category === 'all') {
-                    if(card.classList.contains('classified') && card.style.display !== 'block') {
+            // Toggle active tab appearance
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('tab-' + category).classList.add('active');
+            
+            filterRecords();
+        }
+
+        function filterRecords() {
+            const query = document.getElementById('recordSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.record-card');
+            
+            let unlockedSecret = false;
+            if (query.includes('iota')) {
+                unlockedSecret = true;
+            }
+
+            cards.forEach(card => {
+                const keywords = card.getAttribute('data-keywords') || '';
+                const cardCategory = card.getAttribute('data-category');
+                
+                // Check if search text matches (or if keyword is 'reac' to show everything)
+                const matchesSearch = keywords.includes(query) || query === 'reac' || query.trim() === '';
+                
+                // Check if current active tab category matches
+                const matchesTab = (currentCategory === 'all' || cardCategory === currentCategory);
+
+                if (card.classList.contains('classified')) {
+                // Hidden classified card only shows up if keywords match the specific 'iota' unlock search term
+                if (unlockedSecret) {
+                card.style.display = 'block';
+                    } else {
+                card.style.display = 'none';
+                }
+                            } else {
+                // Regular card display rules
+                if (matchesSearch && matchesTab) {
+                card.style.display = 'block';
+                    } else {
                         card.style.display = 'none';
-                    } else if (!card.classList.contains('classified')) {
-                        card.style.display = 'block';
+                            }
+                        }
+                    });
 }
-} else if(card.getAttribute('data-category') === category) {
-card.style.display = 'block';
-} else {
-card.style.display = 'none';
-}
-});
-}
-// Search Modal Toggling
-function toggleSearch(show) {
-const modal = document.getElementById('searchModal');
-modal.style.display = show ? 'flex' : 'none';
-if(show) {
-document.getElementById('searchInput').value = "";
-document.getElementById('searchResults').innerHTML = "";
-document.getElementById('searchInput').focus();
-}
-}
-// Central Index Database Array
-const archiveData = [
-{ title: "Decree No. 001: The Firearms Act", desc: "Mandatory carrying laws and survival guide PDF.", link: "firearms-act.pdf", type: "PDF" },
-{ title: "Transport & Containment Survival Guide", desc: "Instructional PDF guide for transport routes.", link: "transport-survival.pdf", type: "PDF" },
-{ title: "NNEPP Power Grid Broadcast", desc: "Automated transmission segment feed.", link: "TRANSMISSION_ALERT", type: "Feed" },
-{ title: "Governor Addresses Council on Project Delta", desc: "News article on portable concrete backpack wall.", link: "news.html", type: "News" },
-{ title: "⚠️ CLASSIFIED: Video 1 - Iota Squad GoPro Recovery Log", desc: "[RESTRICTED DATA] Hidden tactical operations file.", link: "SECRET_LOG", type: "Classified" }
-];
-// Search Logic Processing Function
-function executeSearch() {
-const query = document.getElementById('searchInput').value.toLowerCase();
-const resultsDiv = document.getElementById('searchResults');
-resultsDiv.innerHTML = "";
-if(query.trim() === "") return;
-archiveData.forEach(item => {
-const matchesQuery = item.title.toLowerCase().includes(query) ||
-item.desc.toLowerCase().includes(query);
-if (matchesQuery || query === "reac") {
-const div = document.createElement('div');
-div.className = "search-result-item";
-div.innerHTML = <span>[${item.type}]</span> ${item.title}<br><small style="color:#aaa">${item.desc}</small>;
-div.onclick = function() {
-if(item.link === "SECRET_LOG") {
-toggleSearch(false);
-const iotaCard = document.getElementById('iota-log');
-iotaCard.style.display = "block";
-iotaCard.scrollIntoView({ behavior: 'smooth' });
-alert("CRITICAL ALARM: Classified file 'Iota Squad' injected into main directory view.");
-} else if(item.link === "TRANSMISSION_ALERT") {
-alert('Playing Transmission Segment...');
-} else {
-window.location.href = item.link;
-}
-};
-resultsDiv.appendChild(div);
-}
-});
-}
-
-
